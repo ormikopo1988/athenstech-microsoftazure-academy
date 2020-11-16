@@ -1,0 +1,37 @@
+﻿@page
+@model ReadHierarchicalValueModel
+@{
+    ViewData["Title"] = "Read hierarchical configuration values page";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Hierarchical Configuration Values</h2>
+
+    @if (!string.IsNullOrEmpty(Model.PositionTitle))
+    {
+        <p>
+            <strong>Position -> Title:</strong> <code>@Model.PositionTitle</code>
+        </p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.PositionName))
+    {
+        <p>
+            <strong>Position -> Name:</strong> <code>@Model.PositionName</code>
+        </p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.PositionCountry))
+    {
+        <p>
+            <strong>Position -> Country:</strong> <code>@Model.PositionCountry</code>
+        </p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.DefaultLogLevel))
+    {
+        <p>
+            <strong>Logging -> LogLevel -> DefaultLogLevel:</strong> <code>@Model.DefaultLogLevel</code>
+        </p>
+    }
+</div>

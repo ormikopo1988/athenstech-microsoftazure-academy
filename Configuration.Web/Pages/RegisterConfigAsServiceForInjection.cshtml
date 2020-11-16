@@ -1,0 +1,37 @@
+﻿@page
+@model RegisterConfigAsServiceForInjectionModel
+@{
+    ViewData["Title"] = "Read values using service injected in the DI";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Config Values using service registered in DI</h2>
+
+    @if (!string.IsNullOrEmpty(Model.ClientId))
+    {
+        <p>
+            <strong>OAuthSettings -> ClientId:</strong> <code>@Model.ClientId</code>
+        </p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.ClientSecret))
+    {
+        <p>
+            <strong>OAuthSettings -> ClientSecret:</strong> <code>@Model.ClientSecret</code>
+        </p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Scope))
+    {
+        <p>
+            <strong>OAuthSettings -> Scope:</strong> <code>@Model.Scope</code>
+        </p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.RedirectUrl))
+    {
+        <p>
+            <strong>OAuthSettings -> RedirectUrl:</strong> <code>@Model.RedirectUrl</code>
+        </p>
+    }
+</div>

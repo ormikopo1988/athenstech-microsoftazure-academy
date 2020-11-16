@@ -1,0 +1,16 @@
+﻿@page
+@model ReadSimpleValueModel
+@{
+    ViewData["Title"] = "Read simple configuration values page";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Simple Configuration Values</h2>
+
+    @if (!string.IsNullOrEmpty(Model.MyKey))
+    {
+        <p>
+            <strong>My Key:</strong> <code>@Model.MyKey</code>
+        </p>
+    }
+</div>

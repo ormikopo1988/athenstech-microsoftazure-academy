@@ -1,0 +1,23 @@
+﻿@page
+@model ReadConnectionStringValueModel
+@{
+    ViewData["Title"] = "Read connection strings values page";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Connection string Values</h2>
+
+    @if (!string.IsNullOrEmpty(Model.PrimaryDBConnectionString))
+    {
+        <p>
+            <strong>ConnectionStrings -> PrimaryDB:</strong> <code>@Model.PrimaryDBConnectionString</code>
+        </p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.SecondaryDBConnectionString))
+    {
+        <p>
+            <strong>ConnectionStrings -> SecondaryDB:</strong> <code>@Model.SecondaryDBConnectionString</code>
+        </p>
+    }
+</div>

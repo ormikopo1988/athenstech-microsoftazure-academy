@@ -1,0 +1,23 @@
+﻿@page
+@model ReadValueFromArrayModel
+@{
+    ViewData["Title"] = "Read values from array page";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Values from array</h2>
+
+    @if (!string.IsNullOrEmpty(Model.FirstServerName))
+    {
+        <p>
+            <strong>Servers -> [0] -> Name:</strong> <code>@Model.FirstServerName</code>
+        </p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.SecondServerName))
+    {
+        <p>
+            <strong>Servers -> [1] -> Name:</strong> <code>@Model.SecondServerName</code>
+        </p>
+    }
+</div>

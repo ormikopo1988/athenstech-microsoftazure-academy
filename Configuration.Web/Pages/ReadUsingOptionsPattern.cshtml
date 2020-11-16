@@ -1,0 +1,23 @@
+﻿@page
+@model ReadUsingOptionsPatternModel
+@{
+    ViewData["Title"] = "Read values using options pattern page";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Configuration Values using Options Pattern</h2>
+
+    @if (!string.IsNullOrEmpty(Model.PositionTitle))
+    {
+        <p>
+            <strong>Position -> Title:</strong> <code>@Model.PositionTitle</code>
+        </p>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.PositionName))
+    {
+        <p>
+            <strong>Position -> Name:</strong> <code>@Model.PositionName</code>
+        </p>
+    }
+</div>
