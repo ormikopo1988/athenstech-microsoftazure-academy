@@ -8,7 +8,7 @@
 
         public bool IsValid()
         {
-            return !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Description);
+            return !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Description);
         }
     }
 }

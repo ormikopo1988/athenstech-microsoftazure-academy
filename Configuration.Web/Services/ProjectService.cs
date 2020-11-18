@@ -1,4 +1,5 @@
-﻿using Configuration.Web.Interfaces;
+﻿using Configuration.Web.DbAccess.Entities;
+using Configuration.Web.Interfaces;
 using Configuration.Web.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Configuration.Web.Services
 
         public async Task<int> CreateAsync(ProjectDto project)
         {
-            await projectRepository.SaveAsync(new DbAccess.Entities.Project
+            await projectRepository.SaveAsync(new Project
             {
                 Name = project.Name,
                 Description = project.Description
