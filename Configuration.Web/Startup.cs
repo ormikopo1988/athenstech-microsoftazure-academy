@@ -40,7 +40,15 @@ namespace Configuration.Web
             // ProjectRepository Registration
             services.AddScoped<IProjectRepository, ProjectRepository>();
 
-            // Register the SchoolContext
+            // Register the ApplicationDbContext
+            // Create the database by following steps that use migrations to create it:
+            // - dotnet tool install --global dotnet-ef
+            // - dotnet add package Microsoft.EntityFrameworkCore.Design
+            // - dotnet ef migrations add InitialCreate
+            // - dotnet ef database update
+            // This installs dotnet ef and the design package which is required to run the command on a project. 
+            // The migrations command scaffolds a migration to create the initial set of tables for the model. 
+            // The database update command creates the database and applies the new migration to it.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
