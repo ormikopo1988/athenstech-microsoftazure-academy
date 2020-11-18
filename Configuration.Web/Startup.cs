@@ -1,6 +1,11 @@
+using Configuration.Web.DbAccess;
+using Configuration.Web.Interfaces;
 using Configuration.Web.Models;
+using Configuration.Web.Repositories;
+using Configuration.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +33,16 @@ namespace Configuration.Web
             var settings = new OAuthSettings();
             Configuration.Bind(OAuthSettings.OAuthSection, settings);
             services.AddSingleton(settings);
+
+            // ProjectService Registration
+            services.AddScoped<IProjectService, ProjectService>();
+
+            // ProjectRepository Registration
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+
+            // Register the SchoolContext
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
             services.AddRazorPages();
         }
