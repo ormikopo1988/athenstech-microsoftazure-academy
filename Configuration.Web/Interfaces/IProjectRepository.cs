@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Configuration.Web.Interfaces
 {
-    public interface IProjectRepository : IDisposable
+    public interface IProjectRepository : IAsyncDisposable
     {
         Task<List<Project>> GetAllAsync();
         Task<int> SaveAsync(Project project);

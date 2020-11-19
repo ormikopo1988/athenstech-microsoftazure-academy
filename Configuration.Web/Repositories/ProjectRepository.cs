@@ -40,9 +40,9 @@ namespace Configuration.Web.Repositories
             return await applicationDbContext.SaveChangesAsync();
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            applicationDbContext.Dispose();
+            await applicationDbContext.DisposeAsync();
         }
     }
 }
