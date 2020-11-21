@@ -14,6 +14,8 @@ namespace Configuration.Web.DbAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Project>().ToTable("Project");
         }
     }
