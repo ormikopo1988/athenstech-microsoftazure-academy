@@ -13,13 +13,11 @@ namespace Configuration.Web.Pages
         }
 
         public string FirstServerName { get; private set; }
-        public string SecondServerName { get; private set; }
 
         public void OnGet()
         {
             // From array with index
             FirstServerName = _configuration["Servers:0:Name"];
-            SecondServerName = _configuration["Servers:1:Name"];
         }
     }
 }
