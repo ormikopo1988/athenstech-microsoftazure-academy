@@ -18,6 +18,14 @@ namespace Logging.Web.Controllers
             _logger = logger;
         }
 
+        // If we want to define a custom category for our log messages
+        //private readonly ILogger _logger;
+
+        //public HomeController(ILoggerFactory loggerFactory)
+        //{
+        //    _logger = loggerFactory.CreateLogger("CustomCategoryName");
+        //}
+
         public IActionResult Index()
         {
             // This will output something like the following:
