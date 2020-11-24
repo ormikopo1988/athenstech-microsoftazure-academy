@@ -22,7 +22,7 @@ namespace Configuration.Web.Pages
 
         public async Task OnGetAsync()
         {
-            logger.LogInformation("About to fetch all available projects so far.");
+            logger.LogWarning("About to fetch all available projects so far.");
 
             Projects = await projectService.FetchAllAsync();
         }

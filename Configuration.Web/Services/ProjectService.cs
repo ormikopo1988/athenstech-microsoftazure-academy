@@ -1,6 +1,7 @@
 ﻿using Configuration.Web.DbAccess.Entities;
 using Configuration.Web.Interfaces;
 using Configuration.Web.Models;
+using Microsoft.ApplicationInsights;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,9 +11,13 @@ namespace Configuration.Web.Services
     {
         private readonly IProjectRepository projectRepository;
 
-        public ProjectService(IProjectRepository projectRepository)
+        // This telemetryclient can be used to track additional telemetry using TrackXXX() api.
+        private readonly TelemetryClient telemetryClient;
+
+        public ProjectService(IProjectRepository projectRepository, TelemetryClient telemetryClient)
         {
             this.projectRepository = projectRepository;
+            this.telemetryClient = telemetryClient;
         }
 
         public async Task<int> CreateAsync(ProjectDto project)
@@ -23,7 +28,17 @@ namespace Configuration.Web.Services
                 Description = project.Description
             });
 
-            return await projectRepository.CommitAsync();
+            var projectInsertedRows = await projectRepository.CommitAsync();
+
+            if (projectInsertedRows == 1)
+            {
+                var customEventProperties = new Dictionary<string, string>();
+                customEventProperties.Add("ProjectName", project.Name);
+
+                telemetryClient.TrackEvent("NewProjectCreated", customEventProperties);
+            }
+
+            return projectInsertedRows;
         }
 
         public async Task<List<ProjectDto>> FetchAllAsync()
