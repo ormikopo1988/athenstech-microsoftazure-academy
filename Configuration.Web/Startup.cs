@@ -1,14 +1,18 @@
+using Configuration.Web.ApplicationInsights;
 using Configuration.Web.DbAccess;
 using Configuration.Web.Interfaces;
 using Configuration.Web.Models;
 using Configuration.Web.Repositories;
 using Configuration.Web.Services;
+using Microsoft.ApplicationInsights.AspNetCore.TelemetryInitializers;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Linq;
 
 namespace Configuration.Web
 {
@@ -52,12 +56,38 @@ namespace Configuration.Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
+            // The following line enables Application Insights telemetry collection.
+            services.AddApplicationInsightsTelemetry();
+
+            // Register the settings for "ApplicationInsights" section as a service for injection from DI container
+            var applicationInsightsSettings = new ApplicationInsightsSettings();
+            Configuration.Bind(ApplicationInsightsSettings.ApplicationInsightsSectionKey, applicationInsightsSettings);
+            services.AddSingleton(applicationInsightsSettings);
+
+            // Use telemetry initializers when you want to enrich telemetry with additional information
+            services.AddSingleton<ITelemetryInitializer, CloudRoleTelemetryInitializer>();
+
+            // Remove a specific built-in telemetry initializer
+            var telemetryInitializerToRemove = services.FirstOrDefault<ServiceDescriptor>
+                                (t => t.ImplementationType == typeof(AspNetCoreEnvironmentTelemetryInitializer));
+
+            if (telemetryInitializerToRemove != null)
+            {
+                services.Remove(telemetryInitializerToRemove);
+            }
+
+            // You can add custom telemetry processors to TelemetryConfiguration by using the extension method AddApplicationInsightsTelemetryProcessor on IServiceCollection. 
+            // You use telemetry processors in advanced filtering scenarios
+            services.AddApplicationInsightsTelemetryProcessor<StaticWebAssetsTelemetryProcessor>();
+
             services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, TelemetryConfiguration configuration, ApplicationInsightsSettings applicationInsightsSettings)
         {
+            configuration.DisableTelemetry = applicationInsightsSettings.DisableTelemetry;
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
