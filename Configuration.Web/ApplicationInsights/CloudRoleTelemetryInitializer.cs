@@ -16,17 +16,11 @@ namespace Configuration.Web.ApplicationInsights
 
         public void Initialize(ITelemetry telemetry)
         {
-            if (string.IsNullOrEmpty(telemetry.Context.Cloud.RoleName))
-            {
-                // Set custom role name here
-                telemetry.Context.Cloud.RoleName = settings.CloudRoleName;
-            }
+            // Set custom role name here
+            telemetry.Context.Cloud.RoleName = settings.CloudRoleName;
 
-            if (string.IsNullOrEmpty(telemetry.Context.Cloud.RoleInstance))
-            {
-                // Set custom role instance here
-                telemetry.Context.Cloud.RoleInstance = MachineName;
-            }
+            // Set custom role instance here
+            telemetry.Context.Cloud.RoleInstance = MachineName;
         }
     }
 }
